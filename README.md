@@ -39,11 +39,6 @@ Show slack files at channel id XXXXXXXXX.
 $ slack-file --show --channel-id=XXXXXXXXX --token xxxxxx-xxxxxxxxx
 ```
 
-Show slack files at channel name XXXXXX.
-```
-$ slack-file --show --channel-name=XXXXXX --token xxxxxx-xxxxxxxxx
-```
-
 Show slack files that are filtered by type. See https://api.slack.com/methods/files.list
 ```
 $ slack-file --show --types=images --token xxxxxx-xxxxxxxxx
@@ -98,9 +93,9 @@ Show, download, delete slack files.
 $ slack-file --show --download --delete --token xxxxxx-xxxxxxxxx
 ```
 
-Show, download, delete slack files at channel name to downloads_YYYYMMDD folder XXXXXX that are more than more than the end of last month old.
+Show, download, delete slack files at channel id to downloads_YYYYMMDD folder XXXXXX that are more than more than the end of last month old.
 ```
-$ slack-file --show --download --delete --channel-name=XXXXXX --before-end-of-month=1 --to-with-date --token xxxxxx-xxxxxxxxx
+$ slack-file --show --download --delete --channel-id=XXXXXX --before-end-of-month=1 --to-with-date --token xxxxxx-xxxxxxxxx
 ```
 
 ### Set options by .env file
@@ -110,25 +105,12 @@ Set options capitalized and replaced '-' to '_'.
 .env
 ```
 TOKEN=xxxxxx-xxxxxxxxx
-CHANNEL_NAME=XXXXXX
+CHANNEL_ID=XXXXXX
 BEFORE_END_OF_MONTH=1
 ```
 
 ```
 $ slack-file --list --download --delete
-```
-
-### Set options by specified .env file.
-
-.env.prod
-```
-TOKEN=xxxxxx-xxxxxxxxx
-CHANNEL_NAME=XXXXXX
-BEFORE_END_OF_MONTH=2
-```
-
-```
-$ slack-file --list --download --delete --env .env.prod
 ```
 
 ## Options
@@ -140,11 +122,10 @@ $ slack-file --list --download --delete --env .env.prod
 | download | Download file from slack | false | false |
 | delete | Delete slack files | false | false |
 | channel-id | Filter files by channel id | all | false |
-| channel-name | Filter files by channel name | all | false |
+| exclude-channel-ids | Filter files by excluded channel ids | all | false |
 | types | Filter files by type | all | false |
 | before-timestamp | Filter files by before the timestamp | now | false |
 | before-days | Filter files by more than ? days old | now | false |
 | before-end-of-month | Filter files by more than the end of ? month(s) ago | now | false |
 | to | Download slack files to specified download folder | downloads | false |
 | to-with-date | Add date info to download folder name | false | false |
-| env | Specify .env file | .env | false |
