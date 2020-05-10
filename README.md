@@ -1,22 +1,16 @@
 # slack-file
+
 Show slack file list, download slack files, delete slack files by channel and period of time.
 
 **Table of Contents**
 
 - [Install](#install)
 - [Usage](#usage)
-    - [Show slack file list](#show_slack_file_list)
-        - [Show slack file list at channel id XXXXXXXXX](#show_slack_file_list_at_channel_id_xxxxxxxxx)
-        - [Show slack file list at channel name XXXXXX](#show_slack_file_list_at_channel_name_xxxxxx)
-        - [Show slack file that are filtered by type](#show_slack_file_that_are_filtered_by_type)
-        - [Show slack files that are more than 30 days old](#show_slack_files_that_are_more_than_30_days_old)
-        - [Show slack files that are more than the end of last month old](#show_slack_files_that_are_more_than_the_end_of_last_month_old)
-        - [Show slack files that are more than the end of two months old](#show_slack_files_that_are_more_than_the_end_of_two_months_old)
-    - [Download slack files](#download_slack_files)
-    - [Delete slack files](#delete_slack_files)
-    - [Show, download, delete slack files](#show_download,_delete_slack_files)
-    - [Set options by .env file](#set_options_by_env_file)
-    - [Set options by specified .env file](#set_options_by_specified_env_file)
+    - [Show slack file list](#show-slack-file-list)
+    - [Download slack files](#download-slack-files)
+    - [Delete slack files](#delete-slack-files)
+    - [Show, download, delete slack files](#show-download-delete-slack-files)
+    - [Set options by .env file](#set-options-by-env-file)
 - [Flags](#flags)
 
 
@@ -31,6 +25,7 @@ $ go get github.com/tmyymmt/slack-file
 ## Usage
 
 Set your slack api token.
+
 
 ### Show slack file list
 
@@ -86,7 +81,7 @@ If you want to add date info to download folder then set `--to-with-date` option
 $ slack-file --download --to-with-date --token xxxxxx-xxxxxxxxx
 ```
 ```
-./downloads_20200510/
+./downloads_YYYYMMDD/
 ```
 
 ### Delete slack files
@@ -98,9 +93,14 @@ $ slack-file --delete
 
 ### Show, download, delete slack files
 
-Show, download, delete slack files at channel name XXXXXX that are more than more than the end of last month old.
+Show, download, delete slack files.
 ```
-$ slack-file --list --download --delete --channel-name=XXXXXX --before-end-of-month=1 --token xxxxxx-xxxxxxxxx
+$ slack-file --list --download --delete --token xxxxxx-xxxxxxxxx
+```
+
+Show, download, delete slack files at channel name to downloads_YYYYMMDD folder XXXXXX that are more than more than the end of last month old.
+```
+$ slack-file --list --download --delete --channel-name=XXXXXX --before-end-of-month=1 --to-with-date --token xxxxxx-xxxxxxxxx
 ```
 
 ### Set options by .env file
@@ -117,7 +117,7 @@ Show slack file list, download slack files, delete slack files at channel name X
 $ slack-file --list --download --delete
 ```
 
-Set options by specified .env file.
+### Set options by specified .env file.
 
 .env.prod
 ```
