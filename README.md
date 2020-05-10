@@ -6,12 +6,12 @@ Show slack file list, download slack files, delete slack files by channel and pe
 - [Install](#install)
 - [Usage](#usage)
     - [Show slack file list](#show_slack_file_list)
-    - [Show slack file list at channel id XXXXXXXXX](#show_slack_file_list_at_channel_id_xxxxxxxxx)
-    - [Show slack file list at channel name XXXXXX](#show_slack_file_list_at_channel_name_xxxxxx)
-    - [Show slack file that are filtered by type](#show_slack_file_that_are_filtered_by_type)
-    - [Show slack files that are more than 30 days old](#show_slack_files_that_are_more_than_30_days_old)
-    - [Show slack files that are more than the end of last month old](#show_slack_files_that_are_more_than_the_end_of_last_month_old)
-    - [Show slack files that are more than the end of two months old](#show_slack_files_that_are_more_than_the_end_of_two_months_old)
+        - [Show slack file list at channel id XXXXXXXXX](#show_slack_file_list_at_channel_id_xxxxxxxxx)
+        - [Show slack file list at channel name XXXXXX](#show_slack_file_list_at_channel_name_xxxxxx)
+        - [Show slack file that are filtered by type](#show_slack_file_that_are_filtered_by_type)
+        - [Show slack files that are more than 30 days old](#show_slack_files_that_are_more_than_30_days_old)
+        - [Show slack files that are more than the end of last month old](#show_slack_files_that_are_more_than_the_end_of_last_month_old)
+        - [Show slack files that are more than the end of two months old](#show_slack_files_that_are_more_than_the_end_of_two_months_old)
     - [Download slack files](#download_slack_files)
     - [Delete slack files](#delete_slack_files)
     - [Show, download, delete slack files](#show_download,_delete_slack_files)
@@ -33,38 +33,38 @@ $ go get github.com/tmyymmt/slack-file
 Set your slack api token.
 
 ### Show slack file list
+
+Show slack file list.
 ```
 $ slack-file --list --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack file list at channel id XXXXXXXXX
+Show slack file list at channel id XXXXXXXXX.
 ```
 $ slack-file --list --channel-id=XXXXXXXXX --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack file list at channel name XXXXXX
+Show slack file list at channel name XXXXXX.
 ```
 $ slack-file --list --channel-name=XXXXXX --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack file that are filtered by type
-
-See https://api.slack.com/methods/files.list
+Show slack file that are filtered by type. See https://api.slack.com/methods/files.list
 ```
 $ slack-file --list --types=images --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack files that are more than 30 days old
+Show slack files that are more than 30 days old.
 ```
 $ slack-file --list --before-days 30 --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack files that are more than the end of last month old
+Show slack files that are more than the end of last month old.
 ```
 $ slack-file --list --before-end-of-month=1 --token xxxxxx-xxxxxxxxx
 ```
 
-### Show slack files that are more than the end of two months old
+Show slack files that are more than the end of two months old.
 ```
 $ slack-file --list --before-end-of-month=2 --token xxxxxx-xxxxxxxxx
 ```
@@ -90,6 +90,8 @@ $ slack-file --download --to-with-date --token xxxxxx-xxxxxxxxx
 ```
 
 ### Delete slack files
+
+Delete slack files.
 ```
 $ slack-file --delete 
 ```
@@ -115,7 +117,7 @@ Show slack file list, download slack files, delete slack files at channel name X
 $ slack-file --list --download --delete
 ```
 
-### Set options by specified .env file
+Set options by specified .env file.
 
 .env.prod
 ```
