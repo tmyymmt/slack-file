@@ -10,6 +10,7 @@ import (
 	"math"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -47,6 +48,7 @@ func main() {
 	beforeEndOfMonth := flag.Int("before-end-of-month", 0, "Filter files by more than the end of ? month(s) ago")
 	to := flag.String("to", "downloads", "Download slack files to specified download folder")
 	toWidthDate := flag.Bool("to-with-date", false, "Add date info to download folder name")
+	toWidthChannels := flag.Bool("to-with-channels", false, "Add channels folder at download folder")
 	flag.Parse()
 
 	if *slackToken == "" {
@@ -107,8 +109,9 @@ func main() {
 			}
 
 			if *doShow {
-				log.Printf("%v \"%v\" %v \"%v\" %v\n",
+				log.Printf("%v \"%v\" \"%v\" %v \"%v\" %v\n",
 					slackFile.ID,
+					slackFile.Channels,
 					slackFile.Title,
 					slackFile.Size,
 					time.Unix(int64(slackFile.Created), 0).Format("2006-01-02 15:04:05 MST"),
@@ -116,7 +119,7 @@ func main() {
 			}
 			if *doDownload {
 				waitGroup.Add(1)
-				go download(&waitGroup, slackFile, *slackToken, toResult)
+				go download(&waitGroup, slackFile, *slackToken, toResult, *toWidthChannels)
 			}
 			if *doDelete {
 				deleteFile := SlackFile{slackFile.ID, slackFile.Title}
@@ -149,7 +152,7 @@ func contains(array []string, value string) bool {
 	return false
 }
 
-func download(waitGroup *sync.WaitGroup, slackFile slack.File, slackToken string, downloadFolder string) {
+func download(waitGroup *sync.WaitGroup, slackFile slack.File, slackToken string, downloadFolder string, widthChannels bool) {
 	defer waitGroup.Done()
 	req, err := http.NewRequest("GET", slackFile.URLPrivateDownload, nil)
 	req.Header.Set("Authorization", "Bearer "+slackToken)
@@ -165,11 +168,21 @@ func download(waitGroup *sync.WaitGroup, slackFile slack.File, slackToken string
 		log.Println(err, slackFile.URLPrivateDownload)
 		return
 	}
+
+	downloadFolderResult := downloadFolder
+	if widthChannels {
+		channelsResult := strings.Join(slackFile.Channels, "_")
+		if len(slackFile.Channels) != 0 {
+			downloadFolderResult = filepath.Join(downloadFolderResult, channelsResult)
+			os.Mkdir(downloadFolderResult, 0777)
+		}
+	}
+
 	withId := false
-	if exists(getFileName(slackFile, withId, downloadFolder)) {
+	if exists(getFileName(slackFile, withId, downloadFolderResult)) {
 		withId = true
 	}
-	file, err := os.OpenFile(getFileName(slackFile, withId, downloadFolder), os.O_CREATE|os.O_WRONLY, 0666)
+	file, err := os.OpenFile(getFileName(slackFile, withId, downloadFolderResult), os.O_CREATE|os.O_WRONLY, 0666)
 	if err != nil {
 		log.Println(err, slackFile.URLPrivateDownload)
 		return

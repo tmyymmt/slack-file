@@ -76,17 +76,31 @@ Default folder is `./downloads`
 $ slack-file --download --token xxxxxx-xxxxxxxxx
 ```
 
-If you want to download slack files to specified download folder then set `--to` option`.
+If you want to download slack files to specified download folder then set `--to` option.
 ```
 $ slack-file --download --to ./folder1 --token xxxxxx-xxxxxxxxx
 ```
+```
+./folder1/
+```
 
-If you want to add date info to download folder then set `--to-with-date` option`.
+If you want to add date info to download folder then set `--to-with-date` option.
 ```
 $ slack-file --download --to-with-date --token xxxxxx-xxxxxxxxx
 ```
 ```
 ./downloads_YYYYMMDD/
+```
+
+If you want to add channel sub folders to download folder then set `--to-with-channels` option.
+```
+$ slack-file --download --to-with-channels --token xxxxxx-xxxxxxxxx
+```
+```
+./downloads/
+./downloads/XXXXXXXXX/
+./downloads/XXXXXXXXX_YYYYYYYYY/
+./downloads/YYYYYYYYY/
 ```
 
 ### Delete slack files
@@ -139,3 +153,4 @@ $ slack-file --list --download --delete
 | before-end-of-month | Filter files by more than the end of ? month(s) ago | now | false |
 | to | Download slack files to specified download folder | downloads | false |
 | to-with-date | Add date info to download folder name | false | false |
+| to-with-channels | Add channels folder at download folder | false | false |
