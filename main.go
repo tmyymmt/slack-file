@@ -17,6 +17,12 @@ import (
 
 const envFile = ".env"
 
+// These variables are set in build step
+var (
+	Version  = "unset"
+	Revision = "unset"
+)
+
 func init() {
 	log.SetFlags(0)
 }
