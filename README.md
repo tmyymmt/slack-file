@@ -139,11 +139,11 @@ $ slack-file --list --download --delete --env .env.prod
 | list | Show slack file list | true | false |
 | download | Downloaded file from slack | false | false |
 | delete | Delete slack files | false | false |
-| channel-id | Filter files by channel id | all |  |
-| channel-name | Filter files by channel name | all |  |
-| types | Filter files by type | all |  |
-| before-days | Filter files by more than ? days old | now |  |
-| before-end-of-month | Filter files by more than the end of ? month ago | now |  |
-| to | Specified download folder |  | false |
-| to-with-date | Add date info to download folder |  | false |
-| env | Specitied .env file | .env |  |
+| channel-id | Filter files by channel id | all | false |
+| channel-name | Filter files by channel name | all | false |
+| types | Filter files by type | all | false |
+| before-days | Filter files by more than ? days old | now | false |
+| before-end-of-month | Filter files by more than the end of ? month ago | now | false |
+| to | Specified download folder | downloads | false |
+| to-with-date | Add date info to download folder | false | false |
+| env | Specitied .env file | .env | false |
