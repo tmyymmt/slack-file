@@ -39,6 +39,16 @@ Show slack files at channel id XXXXXXXXX.
 $ slack-file --show --channel-id=XXXXXXXXX --token xxxxxx-xxxxxxxxx
 ```
 
+Show slack files exclude channel id XXXXXXXXX.
+```
+$ slack-file --show --exclude-channel-ids=XXXXXXXXX --token xxxxxx-xxxxxxxxx
+```
+
+Show slack files exclude channel id XXXXXXXXX and YYYYYYYYY.
+```
+$ slack-file --show --exclude-channel-ids=XXXXXXXXX,YYYYYYYYY --token xxxxxx-xxxxxxxxx
+```
+
 Show slack files that are filtered by type. See https://api.slack.com/methods/files.list
 ```
 $ slack-file --show --types=images --token xxxxxx-xxxxxxxxx

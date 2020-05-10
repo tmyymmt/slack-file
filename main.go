@@ -17,6 +17,10 @@ import (
 
 const envFile = ".env"
 
+func init() {
+	log.SetFlags(0)
+}
+
 func main() {
 	if exists(envFile) {
 		err := godotenv.Load(envFile)
@@ -30,7 +34,7 @@ func main() {
 	doDownload := flag.Bool("download", false, "Download slack files")
 	doDelete := flag.Bool("delete", false, "Download file from slack")
 	channelId := flag.String("channel-id", "", "Filter files by channel id")
-	excludedChannelIds := flag.String("excluded-channel-ids", "", "Filter files by excluded channel ids")
+	excludeChannelIds := flag.String("exclude-channel-ids", "", "Filter files by excluded channel ids")
 	fileType := flag.String("type", "all", "Filter files by type")
 	beforeTimestamp := flag.Int64("before-timestamp", 0, "Filter files by before the timestamp")
 	beforeDays := flag.Int("before-days", 0, "Filter files by more than ? days old")
@@ -58,9 +62,9 @@ func main() {
 	}
 	beforeResult := int64(math.Min(math.Min(float64(beforeTimestampResult.Unix()), float64(beforeDaysResult.Unix())), float64(beforeEndOfMonthResult.Unix())))
 
-	excludedChannelIdsResult := []string{}
-	if *excludedChannelIds != "" {
-		excludedChannelIdsResult = strings.Split(*excludedChannelIds, ",")
+	excludeChannelIdsResult := []string{}
+	if *excludeChannelIds != "" {
+		excludeChannelIdsResult = strings.Split(*excludeChannelIds, ",")
 	}
 
 	toResult := *to
@@ -86,8 +90,8 @@ func main() {
 	for paging.Page <= paging.Pages {
 		for _, slackFile := range files {
 			exclude := false
-			for _, excludedChannelId := range excludedChannelIdsResult {
-				if contains(slackFile.Channels, excludedChannelId) {
+			for _, excludeChannelId := range excludeChannelIdsResult {
+				if contains(slackFile.Channels, excludeChannelId) {
 					exclude = true
 					continue
 				}
