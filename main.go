@@ -109,12 +109,12 @@ func main() {
 			}
 
 			if *doShow {
-				log.Printf("%v \"%v\" \"%v\" %v \"%v\" %v\n",
+				fmt.Println(
 					slackFile.ID,
-					slackFile.Channels,
-					slackFile.Title,
+					quote(slackFile.Channels),
+					quote(slackFile.Title),
 					slackFile.Size,
-					time.Unix(int64(slackFile.Created), 0).Format("2006-01-02 15:04:05 MST"),
+					quote(time.Unix(int64(slackFile.Created), 0).Format("2006-01-02 15:04:05 MST")),
 					slackFile.URLPrivateDownload)
 			}
 			if *doDownload {
@@ -136,6 +136,10 @@ func main() {
 	if *doDelete {
 		slackFileDeleter.delete(api)
 	}
+}
+
+func quote(text interface{}) string {
+	return fmt.Sprintf("\"%v\"", text)
 }
 
 func exists(filename string) bool {
@@ -193,7 +197,7 @@ func download(waitGroup *sync.WaitGroup, slackFile slack.File, slackToken string
 		log.Println(err, slackFile.URLPrivateDownload)
 		return
 	}
-	log.Printf("Downloaded: %v %v %v \n", slackFile.ID, slackFile.Title, slackFile.URLPrivateDownload)
+	fmt.Println("Downloaded:", slackFile.ID, quote(slackFile.Title), slackFile.URLPrivateDownload)
 }
 
 func getFiles(api *slack.Client, fileType string, beforeTimestamp int64, channel string, page int) ([]slack.File, *slack.Paging, error) {

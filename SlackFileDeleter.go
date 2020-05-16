@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/slack-go/slack"
 	"log"
 	"sync"
@@ -37,7 +38,7 @@ func (s *SlackFileDeleter) delete(api *slack.Client) {
 func (s *SlackFileDeleter) deleteImpl(api *slack.Client, targetFile SlackFile) {
 	defer s.waitGroup.Done()
 	if err := api.DeleteFile(targetFile.ID); err == nil {
-		log.Printf("Deleted %s %s at Slack.\n", targetFile.ID, targetFile.Title)
+		fmt.Println("Deleted:", targetFile.ID, quote(targetFile.Title))
 	} else {
 		log.Println(err)
 	}
