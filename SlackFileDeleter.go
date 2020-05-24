@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/slack-go/slack"
 	"log"
-	"sync"
+	"time"
 )
 
 type SlackFile struct {
@@ -13,14 +13,11 @@ type SlackFile struct {
 }
 
 type SlackFileDeleter struct {
-	files     []SlackFile
-	waitGroup sync.WaitGroup
+	files []SlackFile
 }
 
 func newInstance() SlackFileDeleter {
-	return SlackFileDeleter{
-		waitGroup: sync.WaitGroup{},
-	}
+	return SlackFileDeleter{}
 }
 
 func (s *SlackFileDeleter) registerFile(file SlackFile) {
@@ -29,14 +26,17 @@ func (s *SlackFileDeleter) registerFile(file SlackFile) {
 
 func (s *SlackFileDeleter) delete(api *slack.Client) {
 	for _, targetFile := range s.files {
-		s.waitGroup.Add(1)
-		go s.deleteImpl(api, targetFile)
+		s.deleteImpl(api, targetFile)
+		// https://api.slack.com/docs/rate-limits
+		// https://api.slack.com/methods/files.delete
+		// 50/sec is the limit of slack api 'files.delete'.
+		// 20 * time.Millisecond is the maximum.
+		// +5 is a margin.
+		time.Sleep(25 * time.Millisecond)
 	}
-	s.waitGroup.Wait()
 }
 
 func (s *SlackFileDeleter) deleteImpl(api *slack.Client, targetFile SlackFile) {
-	defer s.waitGroup.Done()
 	if err := api.DeleteFile(targetFile.ID); err == nil {
 		fmt.Println("Deleted:", targetFile.ID, quote(targetFile.Title))
 	} else {
